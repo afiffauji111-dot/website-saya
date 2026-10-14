@@ -1,12 +1,487 @@
-html
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Website Pertama Saya</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPA MTs - Bank Materi & Soal</title>
+<style>
+  *{box-sizing:border-box;font-family:Arial,sans-serif;margin:0;padding:0}
+  body{background:#f0f4f8;color:#222;padding-bottom:70px}
+  .header{background:linear-gradient(135deg,#1e40af,#0891b2);color:#fff;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+  .header h1{font-size:18px}
+  .header p{font-size:12px;opacity:.9;margin-top:4px}
+  .container{padding:12px;max-width:700px;margin:0 auto}
+  .card{background:#fff;padding:14px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+  h2{font-size:16px;color:#1e40af;margin-bottom:10px}
+  h3{font-size:14px;color:#334155;margin-bottom:6px}
+  input,textarea,select{width:100%;padding:10px;margin-bottom:8px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px;font-family:inherit}
+  textarea{min-height:80px;resize:vertical}
+  button{padding:10px 14px;border:none;border-radius:8px;font-size:14px;font-weight:bold;color:#fff;background:#2563eb;cursor:pointer;margin:2px}
+  button.full{width:100%}
+  button.hijau{background:#16a34a}
+  button.merah{background:#dc2626}
+  button.abu{background:#64748b}
+  button.aktif{background:#1e40af;box-shadow:inset 0 0 0 2px #fff}
+  .tab-bar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+  .tab-bar button{flex:1;min-width:70px;font-size:12px;padding:8px 4px}
+  .item{background:#f8fafc;padding:10px;border-radius:8px;margin-bottom:8px;border-left:4px solid #2563eb}
+  .item.soal{border-left-color:#f59e0b}
+  .item.nilai{border-left-color:#16a34a}
+  .item p{font-size:13px;margin-bottom:4px;white-space:pre-wrap;line-height:1.4}
+  .item .meta{font-size:11px;color:#64748b}
+  .opsi{background:#eff6ff;padding:6px 10px;border-radius:6px;margin:4px 0;font-size:13px;cursor:pointer}
+  .opsi:hover{background:#dbeafe}
+  .opsi.benar{background:#dcfce7;font-weight:bold}
+  .opsi.salah{background:#fee2e2}
+  .kosong{text-align:center;color:#94a3b8;font-style:italic;padding:16px;font-size:13px}
+  .badge{display:inline-block;background:#dbeafe;color:#1e40af;font-size:11px;padding:2px 8px;border-radius:10px;margin-right:4px}
+  .badge.k7{background:#fef3c7;color:#92400e}
+  .badge.k8{background:#dbeafe;color:#1e40af}
+  .badge.k9{background:#fce7f3;color:#9d174d}
+  .hidden{display:none!important}
+  .nilai-besar{font-size:28px;font-weight:bold;color:#16a34a;text-align:center;padding:10px}
+  .login-box{max-width:400px;margin:40px auto;padding:20px}
+  .login-box h2{text-align:center;font-size:20px;margin-bottom:16px}
+  .login-box button{margin:6px 0;padding:14px}
+  .footer-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;box-shadow:0 -2px 8px rgba(0,0,0,.1);z-index:99}
+  .footer-nav button{flex:1;background:none;color:#64748b;border-radius:0;font-size:11px;padding:10px 2px;font-weight:normal}
+  .footer-nav button.aktif{color:#1e40af;font-weight:bold;background:#eff6ff}
+  .row{display:flex;gap:6px}
+  .row>*{flex:1}
+</style>
 </head>
 <body>
-  <h1>Halo Dunia!</h1>
-  <p>Website ini dihosting dengan aman dan gratis di Netlify.</p>
+
+<!-- LOGIN -->
+<div id="halamanLogin">
+  <div class="header">
+    <h1>🔬 IPA MTs</h1>
+    <p>Bank Materi, Soal & Administrasi</p>
+  </div>
+  <div class="login-box">
+    <div class="card">
+      <h2>Pilih Peran Anda</h2>
+      <button class="full" onclick="login('guru')">👨‍🏫 Masuk sebagai Guru</button>
+      <button class="full hijau" onclick="login('murid')">👨‍🎓 Masuk sebagai Murid</button>
+      <p style="font-size:11px;color:#64748b;text-align:center;margin-top:10px">Data tersimpan otomatis di HP ini.</p>
+    </div>
+  </div>
+</div>
+
+<!-- APLIKASI -->
+<div id="halamanApp" class="hidden">
+  <div class="header">
+    <h1 id="judulHalaman">🔬 IPA MTs</h1>
+    <p id="subJudul">Selamat datang</p>
+  </div>
+
+  <div class="container" id="konten"></div>
+
+  <div class="footer-nav" id="navBawah"></div>
+</div>
+
+<script>
+/* ===== UTIL ===== */
+const LS = {
+  get: (k, d='[]') => JSON.parse(localStorage.getItem('ipa_'+k) || d),
+  set: (k, v) => localStorage.setItem('ipa_'+k, JSON.stringify(v))
+};
+let peran = '', tabAktif = 'dashboard', soalAktif = null, jawabanUser = {};
+
+/* ===== LOGIN ===== */
+function login(p) {
+  peran = p;
+  localStorage.setItem('ipa_peran', p);
+  document.getElementById('halamanLogin').classList.add('hidden');
+  document.getElementById('halamanApp').classList.remove('hidden');
+  document.getElementById('subJudul').textContent = p === 'guru' ? 'Mode Guru' : 'Mode Murid';
+  tabAktif = 'dashboard';
+  render();
+}
+
+function logout() {
+  if (!confirm('Keluar dari aplikasi?')) return;
+  localStorage.removeItem('ipa_peran');
+  peran = '';
+  document.getElementById('halamanLogin').classList.remove('hidden');
+  document.getElementById('halamanApp').classList.add('hidden');
+}
+
+/* ===== NAVIGASI ===== */
+function pindahTab(t) {
+  tabAktif = t;
+  soalAktif = null;
+  jawabanUser = {};
+  render();
+  window.scrollTo(0,0);
+}
+
+function renderNav() {
+  const nav = document.getElementById('navBawah');
+  if (peran === 'guru') {
+    nav.innerHTML = `
+      <button class="${tabAktif==='dashboard'?'aktif':''}" onclick="pindahTab('dashboard')">🏠<br>Beranda</button>
+      <button class="${tabAktif==='administrasi'?'aktif':''}" onclick="pindahTab('administrasi')">📋<br>Admin</button>
+      <button class="${tabAktif==='materi'?'aktif':''}" onclick="pindahTab('materi')">📚<br>Materi</button>
+      <button class="${tabAktif==='soal'?'aktif':''}" onclick="pindahTab('soal')">❓<br>Soal</button>
+      <button class="${tabAktif==='nilai'?'aktif':''}" onclick="pindahTab('nilai')">🏆<br>Nilai</button>
+      <button onclick="logout()">🚪<br>Keluar</button>`;
+  } else {
+    nav.innerHTML = `
+      <button class="${tabAktif==='dashboard'?'aktif':''}" onclick="pindahTab('dashboard')">🏠<br>Beranda</button>
+      <button class="${tabAktif==='materi'?'aktif':''}" onclick="pindahTab('materi')">📚<br>Materi</button>
+      <button class="${tabAktif==='soal'?'aktif':''}" onclick="pindahTab('soal')">✏️<br>Latihan</button>
+      <button class="${tabAktif==='nilai'?'aktif':''}" onclick="pindahTab('nilai')">🏆<br>Nilaimu</button>
+      <button onclick="logout()">🚪<br>Keluar</button>`;
+  }
+}
+
+/* ===== RENDER UTAMA ===== */
+function render() {
+  renderNav();
+  const el = document.getElementById('konten');
+  const judul = document.getElementById('judulHalaman');
+  if (tabAktif==='dashboard') { judul.textContent = '🏠 Beranda'; el.innerHTML = viewDashboard(); }
+  else if (tabAktif==='administrasi') { judul.textContent = '📋 Administrasi Guru'; el.innerHTML = viewAdministrasi(); }
+  else if (tabAktif==='materi') { judul.textContent = '📚 Materi Bahan Ajar'; el.innerHTML = viewMateri(); }
+  else if (tabAktif==='soal') { judul.textContent = peran==='guru'?'❓ Bank Soal':'✏️ Latihan Soal'; el.innerHTML = peran==='guru'?viewSoalGuru():viewSoalMurid(); }
+  else if (tabAktif==='nilai') { judul.textContent = peran==='guru'?'🏆 Nilai Siswa':'🏆 Nilai Saya'; el.innerHTML = viewNilai(); }
+}
+
+/* ===== DASHBOARD ===== */
+function viewDashboard() {
+  const materi = LS.get('materi'), soal = LS.get('soal'), nilai = LS.get('nilai'), admin = LS.get('admin');
+  if (peran === 'guru') {
+    return `
+    <div class="card">
+      <h2>Selamat Datang, Guru! 👋</h2>
+      <p style="font-size:13px;color:#475569">Kelola materi, soal, dan nilai siswa IPA MTs kelas 7, 8, 9 dari sini.</p>
+    </div>
+    <div class="row">
+      <div class="card" style="text-align:center"><div style="font-size:24px">📚</div><b>${materi.length}</b><br><span style="font-size:12px">Materi</span></div>
+      <div class="card" style="text-align:center"><div style="font-size:24px">❓</div><b>${soal.length}</b><br><span style="font-size:12px">Soal</span></div>
+    </div>
+    <div class="row">
+      <div class="card" style="text-align:center"><div style="font-size:24px">🏆</div><b>${nilai.length}</b><br><span style="font-size:12px">Nilai Masuk</span></div>
+      <div class="card" style="text-align:center"><div style="font-size:24px">📋</div><b>${admin.length}</b><br><span style="font-size:12px">Administrasi</span></div>
+    </div>
+    <div class="card">
+      <h3>⚡ Aksi Cepat</h3>
+      <button class="full" onclick="pindahTab('materi')">+ Tambah Materi</button>
+      <button class="full hijau" onclick="pindahTab('soal')">+ Tambah Soal</button>
+      <button class="full abu" onclick="pindahTab('nilai')">Lihat Nilai Siswa</button>
+    </div>`;
+  } else {
+    const nilai = LS.get('nilai').filter(n=>n.nama==='Murid');
+    return `
+    <div class="card">
+      <h2>Selamat Belajar! 🎓</h2>
+      <p style="font-size:13px;color:#475569">Pilih menu <b>Materi</b> untuk belajar, atau <b>Latihan</b> untuk mengerjakan soal.</p>
+    </div>
+    <div class="card">
+      <h3>📊 Statistikmu</h3>
+      <p style="font-size:13px">Total latihan dikerjakan: <b>${nilai.length}</b></p>
+      <p style="font-size:13px">Nilai terbaik: <b>${nilai.length?Math.max(...nilai.map(n=>n.skor)):'-'}</b></p>
+      <p style="font-size:13px">Nilai terakhir: <b>${nilai.length?nilai[nilai.length-1].skor:'-'}</b></p>
+    </div>`;
+  }
+}
+
+/* ===== ADMINISTRASI ===== */
+function viewAdministrasi() {
+  const data = LS.get('admin');
+  let html = `
+  <div class="card">
+    <h2>📋 Administrasi Guru</h2>
+    <p style="font-size:12px;color:#64748b">Catat Prota, Prosem, RPP, Silabus, dll.</p>
+  </div>
+  <div class="card">
+    <h3>➕ Tambah Administrasi</h3>
+    <input id="admJudul" placeholder="Judul (cth: Prota Semester 1)">
+    <select id="admKategori">
+      <option>Prota</option><option>Prosem</option><option>RPP</option>
+      <option>Silabus</option><option>KKM</option><option>Absensi</option><option>Lainnya</option>
+    </select>
+    <select id="admKelas">
+      <option>Umum</option><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option>
+    </select>
+    <textarea id="admIsi" placeholder="Keterangan / isi / link dokumen..."></textarea>
+    <button class="full hijau" onclick="simpanAdmin()">Simpan Administrasi</button>
+  </div>`;
+  if (data.length === 0) {
+    html += '<div class="card kosong">Belum ada data administrasi.</div>';
+  } else {
+    html += '<div class="card"><h3>📁 Daftar Administrasi ('+data.length+')</h3>';
+    data.forEach((d,i)=>{
+      html += `<div class="item">
+        <span class="badge">${d.kategori}</span>
+        <span class="badge">${d.kelas}</span>
+        <h3 style="margin-top:6px">${d.judul}</h3>
+        <p>${d.isi}</p>
+        <div class="meta">📅 ${d.tgl}</div>
+        <button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem('admin',${i})">Hapus</button>
+      </div>`;
+    });
+    html += '</div>';
+  }
+  return html;
+}
+
+function simpanAdmin() {
+  const judul = document.getElementById('admJudul').value.trim();
+  const isi = document.getElementById('admIsi').value.trim();
+  if (!judul) return alert('Judul wajib diisi!');
+  const data = LS.get('admin');
+  data.push({
+    judul, isi,
+    kategori: document.getElementById('admKategori').value,
+    kelas: document.getElementById('admKelas').value,
+    tgl: new Date().toLocaleDateString('id-ID')
+  });
+  LS.set('admin', data);
+  render();
+  alert('Administrasi tersimpan!');
+}
+
+/* ===== MATERI ===== */
+function viewMateri() {
+  const data = LS.get('materi');
+  let html = '<div class="card"><h2>📚 Materi Bahan Ajar</h2></div>';
+  if (peran === 'guru') {
+    html += `
+    <div class="card">
+      <h3>➕ Tambah Materi</h3>
+      <input id="matJudul" placeholder="Judul materi">
+      <select id="matKelas"><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option></select>
+      <textarea id="matIsi" placeholder="Isi materi..."></textarea>
+      <button class="full hijau" onclick="simpanMateri()">Simpan Materi</button>
+    </div>`;
+  }
+  if (data.length === 0) {
+    html += '<div class="card kosong">Belum ada materi.</div>';
+    return html;
+  }
+  ['Kelas 7','Kelas 8','Kelas 9'].forEach(k=>{
+    const list = data.map((m,i)=>({...m,idx:i})).filter(m=>m.kelas===k);
+    if (list.length === 0) return;
+    html += `<div class="card"><h3>📘 ${k} (${list.length} materi)</h3>`;
+    list.forEach(m=>{
+      html += `<div class="item">
+        <h3>${m.judul}</h3>
+        <p>${m.isi}</p>
+        <div class="meta">📅 ${m.tgl}</div>
+        ${peran==='guru'?`<button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem('materi',${m.idx})">Hapus</button>`:''}
+      </div>`;
+    });
+    html += '</div>';
+  });
+  return html;
+}
+
+function simpanMateri() {
+  const judul = document.getElementById('matJudul').value.trim();
+  const isi = document.getElementById('matIsi').value.trim();
+  if (!judul || !isi) return alert('Judul dan isi wajib diisi!');
+  const data = LS.get('materi');
+  data.push({ judul, isi, kelas: document.getElementById('matKelas').value, tgl: new Date().toLocaleDateString('id-ID') });
+  LS.set('materi', data);
+  render();
+  alert('Materi tersimpan!');
+}
+
+/* ===== SOAL GURU ===== */
+function viewSoalGuru() {
+  const data = LS.get('soal');
+  let html = '<div class="card"><h2>❓ Bank Soal IPA</h2></div>';
+  html += `
+  <div class="card">
+    <h3>➕ Tambah Soal Pilihan Ganda</h3>
+    <select id="soKelas"><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option></select>
+    <input id="soTopik" placeholder="Topik (cth: Suhu & Kalor)">
+    <textarea id="soPertanyaan" placeholder="Pertanyaan..."></textarea>
+    <input id="soA" placeholder="Opsi A">
+    <input id="soB" placeholder="Opsi B">
+    <input id="soC" placeholder="Opsi C">
+    <input id="soD" placeholder="Opsi D">
+    <select id="soJawaban"><option value="A">Jawaban: A</option><option value="B">Jawaban: B</option><option value="C">Jawaban: C</option><option value="D">Jawaban: D</option></select>
+    <textarea id="soPembahasan" placeholder="Pembahasan jawaban..."></textarea>
+    <button class="full hijau" onclick="simpanSoal()">Simpan Soal</button>
+  </div>`;
+  if (data.length === 0) {
+    html += '<div class="card kosong">Belum ada soal.</div>';
+    return html;
+  }
+  ['Kelas 7','Kelas 8','Kelas 9'].forEach(k=>{
+    const list = data.map((s,i)=>({...s,idx:i})).filter(s=>s.kelas===k);
+    if (!list.length) return;
+    html += `<div class="card"><h3>📝 ${k} (${list.length} soal)</h3>`;
+    list.forEach(s=>{
+      html += `<div class="item soal">
+        ${s.topik?`<span class="badge">${s.topik}</span>`:''}
+        <p><b>${s.pertanyaan}</b></p>
+        <p>A. ${s.a}<br>B. ${s.b}<br>C. ${s.c}<br>D. ${s.d}</p>
+        <p style="color:#16a34a"><b>✅ Jawaban: ${s.jawaban}</b></p>
+        <p style="color:#475569;font-size:12px"><b>💡 Pembahasan:</b> ${s.pembahasan}</p>
+        <button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem('soal',${s.idx})">Hapus</button>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  return html;
+}
+
+function simpanSoal() {
+  const p = document.getElementById('soPertanyaan').value.trim();
+  const a = document.getElementById('soA').value.trim();
+  const b = document.getElementById('soB').value.trim();
+  const c = document.getElementById('soC').value.trim();
+  const d = document.getElementById('soD').value.trim();
+  if (!p || !a || !b || !c || !d) return alert('Pertanyaan dan semua opsi wajib diisi!');
+  const data = LS.get('soal');
+  data.push({
+    kelas: document.getElementById('soKelas').value,
+    topik: document.getElementById('soTopik').value.trim(),
+    pertanyaan: p, a, b, c, d,
+    jawaban: document.getElementById('soJawaban').value,
+    pembahasan: document.getElementById('soPembahasan').value.trim(),
+    tgl: new Date().toLocaleDateString('id-ID')
+  });
+  LS.set('soal', data);
+  render();
+  alert('Soal tersimpan!');
+}
+
+/* ===== SOAL MURID (LATIHAN) ===== */
+function viewSoalMurid() {
+  if (soalAktif !== null) return viewLatihan();
+  let html = '<div class="card"><h2>✏️ Latihan Soal IPA</h2><p style="font-size:13px;color:#64748b">Pilih kelas untuk mulai latihan.</p></div>';
+  const data = LS.get('soal');
+  if (!data.length) return html + '<div class="card kosong">Belum ada soal. Tunggu guru menambah soal ya.</div>';
+  ['Kelas 7','Kelas 8','Kelas 9'].forEach(k=>{
+    const jml = data.filter(s=>s.kelas===k).length;
+    html += `<div class="card">
+      <h3>📘 ${k}</h3>
+      <p style="font-size:13px;color:#64748b">${jml} soal tersedia</p>
+      <button class="full ${jml?'':'abu'}" ${jml?'':'disabled'} onclick="mulaiLatihan('${k}')">Mulai Latihan</button>
+    </div>`;
+  });
+  return html;
+}
+
+function mulaiLatihan(kelas) {
+  const soal = LS.get('soal').filter(s=>s.kelas===kelas);
+  if (!soal.length) return alert('Belum ada soal.');
+  soalAktif = { kelas, soal, nomor: 0, skor: 0, riwayat: [] };
+  jawabanUser = {};
+  render();
+}
+
+function viewLatihan() {
+  const s = soalAktif;
+  if (s.nomor >= s.soal.length) {
+    const nilai = Math.round((s.skor / s.soal.length) * 100);
+    // simpan nilai
+    const data = LS.get('nilai');
+    data.push({ nama: 'Murid', kelas: s.kelas, skor: nilai, total: s.soal.length, benar: s.skor, tgl: new Date().toLocaleString('id-ID') });
+    LS.set('nilai', data);
+    const hasil = `
+    <div class="card">
+      <h2>🎉 Selesai!</h2>
+      <div class="nilai-besar">${nilai}</div>
+      <p style="text-align:center;font-size:13px">Benar ${s.skor} dari ${s.soal.length} soal</p>
+      <p style="text-align:center;font-size:12px;color:#64748b;margin-top:4px">${nilai>=80?'Luar biasa! 🌟':nilai>=60?'Bagus, terus belajar! 💪':'Ayo belajar lagi ya! 📖'}</p>
+      <button class="full hijau" onclick="soalAktif=null;render()">Kembali ke Menu</button>
+    </div>
+    <div class="card"><h3>📋 Review Jawaban</h3>
+    ${s.riwayat.map((r,i)=>`
+      <div class="item ${r.benar?'':''}" style="border-left-color:${r.benar?'#16a34a':'#dc2626'}">
+        <p><b>${i+1}. ${r.pertanyaan}</b></p>
+        <p>Jawabanmu: <b style="color:${r.benar?'#16a34a':'#dc2626'}">${r.pilih}</b> ${r.benar?'✅':'❌'}</p>
+        ${!r.benar?`<p>Jawaban benar: <b style="color:#16a34a">${r.jawaban}</b></p>`:''}
+        <p style="font-size:12px;color:#475569"><b>💡 ${r.pembahasan||'Tidak ada pembahasan.'}</b></p>
+      </div>
+    `).join('')}
+    </div>`;
+    return hasil;
+  }
+  const q = s.soal[s.nomor];
+  return `
+  <div class="card">
+    <div style="font-size:12px;color:#64748b">${s.kelas} • Soal ${s.nomor+1} dari ${s.soal.length}</div>
+    <h3 style="margin-top:8px">${q.pertanyaan}</h3>
+  </div>
+  <div class="card">
+    <div class="opsi" onclick="jawab('A')">A. ${q.a}</div>
+    <div class="opsi" onclick="jawab('B')">B. ${q.b}</div>
+    <div class="opsi" onclick="jawab('C')">C. ${q.c}</div>
+    <div class="opsi" onclick="jawab('D')">D. ${q.d}</div>
+  </div>
+  <div class="card" style="text-align:center;font-size:13px;color:#64748b">
+    Skor sementara: <b style="color:#16a34a">${s.skor}</b>
+  </div>`;
+}
+
+function jawab(pilih) {
+  const s = soalAktif;
+  const q = s.soal[s.nomor];
+  const benar = pilih === q.jawaban;
+  if (benar) s.skor++;
+  s.riwayat.push({ pertanyaan: q.pertanyaan, pilih, jawaban: q.jawaban, benar, pembahasan: q.pembahasan });
+  s.nomor++;
+  render();
+}
+
+/* ===== NILAI ===== */
+function viewNilai() {
+  const data = LS.get('nilai');
+  if (peran === 'murid') {
+    const saya = data.filter(n=>n.nama==='Murid');
+    if (!saya.length) return '<div class="card kosong">Belum ada nilai. Coba latihan dulu ya.</div>';
+    let html = '<div class="card"><h2>🏆 Nilai Saya</h2></div>';
+    saya.slice().reverse().forEach(n=>{
+      html += `<div class="item nilai">
+        <span class="badge">${n.kelas}</span>
+        <h3 style="margin-top:6px">Nilai: ${n.skor}</h3>
+        <p>Benar ${n.benar} dari ${n.total} soal</p>
+        <div class="meta">📅 ${n.tgl}</div>
+      </div>`;
+    });
+    return html;
+  }
+  // Guru
+  if (!data.length) return '<div class="card kosong">Belum ada nilai siswa.</div>';
+  let html = '<div class="card"><h2>🏆 Nilai Siswa</h2><p style="font-size:12px;color:#64748b">Total: '+data.length+' nilai</p></div>';
+  const rata = Math.round(data.reduce((a,b)=>a+b.skor,0)/data.length);
+  html += `<div class="card" style="text-align:center"><div style="font-size:12px;color:#64748b">Rata-rata</div><div class="nilai-besar">${rata}</div></div>`;
+  html += '<div class="card"><h3>📋 Daftar Nilai</h3>';
+  data.slice().reverse().forEach((n,i)=>{
+    const idx = data.length-1-i;
+    html += `<div class="item nilai">
+      <span class="badge">${n.kelas}</span>
+      <h3 style="margin-top:6px">${n.nama} — Nilai: ${n.skor}</h3>
+      <p>Benar ${n.benar}/${n.total}</p>
+      <div class="meta">📅 ${n.tgl}</div>
+      <button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem('nilai',${idx})">Hapus</button>
+    </div>`;
+  });
+  html += '</div>';
+  return html;
+}
+
+/* ===== HAPUS ===== */
+function hapusItem(kunci, index) {
+  if (!confirm('Yakin ingin menghapus?')) return;
+  const data = LS.get(kunci);
+  data.splice(index, 1);
+  LS.set(kunci, data);
+  render();
+}
+
+/* ===== AUTO LOGIN ===== */
+window.onload = () => {
+  const p = localStorage.getItem('ipa_peran');
+  if (p) login(p);
+};
+</script>
 </body>
 </html>
-```
