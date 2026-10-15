@@ -5,499 +5,112 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IPA MTs - Bank Materi & Soal</title>
 <style>
-  *{box-sizing:border-box;font-family:Arial,sans-serif;margin:0;padding:0}
-  body{background:#f0f4f8;color:#222;padding-bottom:70px}
-  .header{background:linear-gradient(135deg,#1e40af,#0891b2);color:#fff;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-  .header h1{font-size:18px}
-  .header p{font-size:12px;opacity:.9;margin-top:4px}
-  .container{padding:12px;max-width:700px;margin:0 auto}
-  .card{background:#fff;padding:14px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
-  h2{font-size:16px;color:#1e40af;margin-bottom:10px}
-  h3{font-size:14px;color:#334155;margin-bottom:6px}
-  input,textarea,select{width:100%;padding:10px;margin-bottom:8px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px;font-family:inherit}
-  textarea{min-height:80px;resize:vertical}
-  button{padding:10px 14px;border:none;border-radius:8px;font-size:14px;font-weight:bold;color:#fff;background:#2563eb;cursor:pointer;margin:2px}
-  button.full{width:100%}
-  button.hijau{background:#16a34a}
-  button.merah{background:#dc2626}
-  button.abu{background:#64748b}
-  button.aktif{background:#1e40af;box-shadow:inset 0 0 0 2px #fff}
-  .tab-bar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-  .tab-bar button{flex:1;min-width:70px;font-size:12px;padding:8px 4px}
-  .item{background:#f8fafc;padding:10px;border-radius:8px;margin-bottom:8px;border-left:4px solid #2563eb}
-  .item.soal{border-left-color:#f59e0b}
-  .item.nilai{border-left-color:#16a34a}
-  .item p{font-size:13px;margin-bottom:4px;white-space:pre-wrap;line-height:1.4}
-  .item .meta{font-size:11px;color:#64748b}
-  .opsi{background:#eff6ff;padding:6px 10px;border-radius:6px;margin:4px 0;font-size:13px;cursor:pointer}
-  .opsi:hover{background:#dbeafe}
-  .opsi.benar{background:#dcfce7;font-weight:bold}
-  .opsi.salah{background:#fee2e2}
-  .kosong{text-align:center;color:#94a3b8;font-style:italic;padding:16px;font-size:13px}
-  .badge{display:inline-block;background:#dbeafe;color:#1e40af;font-size:11px;padding:2px 8px;border-radius:10px;margin-right:4px}
-  .badge.k7{background:#fef3c7;color:#92400e}
-  .badge.k8{background:#dbeafe;color:#1e40af}
-  .badge.k9{background:#fce7f3;color:#9d174d}
-  .hidden{display:none!important}
-  .nilai-besar{font-size:28px;font-weight:bold;color:#16a34a;text-align:center;padding:10px}
-  .login-box{max-width:400px;margin:40px auto;padding:20px}
-  .login-box h2{text-align:center;font-size:20px;margin-bottom:16px}
-  .login-box button{margin:6px 0;padding:14px}
-  .footer-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;box-shadow:0 -2px 8px rgba(0,0,0,.1);z-index:99}
-  .footer-nav button{flex:1;background:none;color:#64748b;border-radius:0;font-size:11px;padding:10px 2px;font-weight:normal}
-  .footer-nav button.aktif{color:#1e40af;font-weight:bold;background:#eff6ff}
-  .row{display:flex;gap:6px}
-  .row>*{flex:1}
+*{box-sizing:border-box;font-family:Arial,sans-serif;margin:0;padding:0}
+body{background:#f0f4f8;color:#222;padding-bottom:70px}
+.header{background:linear-gradient(135deg,#1e40af,#0891b2);color:#fff;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.header h1{font-size:18px}.header p{font-size:12px;opacity:.9;margin-top:4px}
+.container{padding:12px;max-width:700px;margin:0 auto}
+.card{background:#fff;padding:14px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+h2{font-size:16px;color:#1e40af;margin-bottom:10px}
+h3{font-size:14px;color:#334155;margin-bottom:6px}
+input,textarea,select{width:100%;padding:10px;margin-bottom:8px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px;font-family:inherit;background:#fff}
+textarea{min-height:80px;resize:vertical}
+button{padding:10px 14px;border:none;border-radius:8px;font-size:14px;font-weight:bold;color:#fff;background:#2563eb;cursor:pointer;margin:2px;font-family:inherit}
+button.full{width:100%}
+button.hijau{background:#16a34a}button.merah{background:#dc2626}button.abu{background:#64748b}
+button.ai{background:linear-gradient(135deg,#8b5cf6,#ec4899);font-size:13px}
+button.aktif{background:#1e40af}
+button:disabled{opacity:.6;cursor:not-allowed}
+.item{background:#f8fafc;padding:10px;border-radius:8px;margin-bottom:8px;border-left:4px solid #2563eb}
+.item.soal{border-left-color:#f59e0b}.item.nilai{border-left-color:#16a34a}.item.admin{border-left-color:#8b5cf6}
+.item p{font-size:13px;margin-bottom:4px;white-space:pre-wrap;line-height:1.4}
+.item .meta{font-size:11px;color:#64748b}
+.kosong{text-align:center;color:#94a3b8;font-style:italic;padding:16px;font-size:13px}
+.badge{display:inline-block;background:#dbeafe;color:#1e40af;font-size:11px;padding:2px 8px;border-radius:10px;margin-right:4px;margin-bottom:2px}
+.hidden{display:none!important}
+.nilai-besar{font-size:28px;font-weight:bold;color:#16a34a;text-align:center;padding:10px}
+.login-box{max-width:400px;margin:40px auto;padding:20px}
+.login-box h2{text-align:center;font-size:20px;margin-bottom:16px}
+.login-box button{margin:6px 0;padding:14px}
+.footer-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;box-shadow:0 -2px 8px rgba(0,0,0,.1);z-index:99}
+.footer-nav button{flex:1;background:none;color:#64748b;border-radius:0;font-size:10px;padding:10px 2px;font-weight:normal}
+.footer-nav button.aktif{color:#1e40af;font-weight:bold;background:#eff6ff}
+.row{display:flex;gap:6px}.row>*{flex:1}
+.info-box{background:#ede9fe;border-left:4px solid #8b5cf6;padding:10px;border-radius:6px;font-size:12px;color:#5b21b6;margin-bottom:8px;line-height:1.5}
+.success-box{background:#dcfce7;border-left:4px solid #16a34a;padding:10px;border-radius:6px;font-size:12px;color:#166534;margin-bottom:8px}
+.warn-box{background:#fef3c7;border-left:4px solid #f59e0b;padding:10px;border-radius:6px;font-size:12px;color:#92400e;margin-bottom:8px}
+.floating-btn{position:fixed;bottom:70px;right:10px;z-index:100;background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;border:none;padding:12px 16px;border-radius:50px;font-size:13px;font-weight:bold;box-shadow:0 4px 12px rgba(139,92,246,0.4);cursor:pointer;font-family:inherit}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="halamanLogin">
-  <div class="header">
-    <h1>🔬 IPA MTs</h1>
-    <p>Bank Materi, Soal & Administrasi</p>
-  </div>
-  <div class="login-box">
-    <div class="card">
-      <h2>Pilih Peran Anda</h2>
-      <button class="full" onclick="login('guru')">👨‍🏫 Masuk sebagai Guru</button>
-      <button class="full hijau" onclick="login('murid')">👨‍🎓 Masuk sebagai Murid</button>
-      <p style="font-size:11px;color:#64748b;text-align:center;margin-top:10px">Data tersimpan otomatis di HP ini.</p>
-    </div>
-  </div>
+  <div class="header"><h1>🔬 IPA MTs</h1><p>Bank Materi, Soal & Administrasi + AI</p></div>
+  <div class="login-box"><div class="card"><h2>Pilih Peran Anda</h2>
+  <button class="full" onclick="login('guru')">👨‍🏫 Masuk sebagai Guru</button>
+  <button class="full hijau" onclick="login('murid')">👨‍🎓 Masuk sebagai Murid</button>
+  <p style="font-size:11px;color:#64748b;text-align:center;margin-top:10px">Data tersimpan otomatis di HP ini.</p>
+  </div></div>
 </div>
 
-<!-- APLIKASI -->
 <div id="halamanApp" class="hidden">
-  <div class="header">
-    <h1 id="judulHalaman">🔬 IPA MTs</h1>
-    <p id="subJudul">Selamat datang</p>
-  </div>
-
+  <div class="header"><h1 id="judulHalaman">🔬 IPA MTs</h1><p id="subJudul">Selamat datang</p></div>
   <div class="container" id="konten"></div>
-
   <div class="footer-nav" id="navBawah"></div>
+  <button class="floating-btn" onclick="pindahTab('pengaturan')">⚙️ Atur API Key</button>
 </div>
 
 <script>
-/* ===== UTIL ===== */
-const LS = {
-  get: (k, d='[]') => JSON.parse(localStorage.getItem('ipa_'+k) || d),
-  set: (k, v) => localStorage.setItem('ipa_'+k, JSON.stringify(v))
-};
-let peran = '', tabAktif = 'dashboard', soalAktif = null, jawabanUser = {};
+const LS={get:(k,d='[]')=>JSON.parse(localStorage.getItem('ipa_'+k)||d),set:(k,v)=>localStorage.setItem('ipa_'+k,JSON.stringify(v))};
+let peran='',tabAktif='dashboard',soalAktif=null;
 
-/* ===== LOGIN ===== */
-function login(p) {
-  peran = p;
-  localStorage.setItem('ipa_peran', p);
-  document.getElementById('halamanLogin').classList.add('hidden');
-  document.getElementById('halamanApp').classList.remove('hidden');
-  document.getElementById('subJudul').textContent = p === 'guru' ? 'Mode Guru' : 'Mode Murid';
-  tabAktif = 'dashboard';
-  render();
+function login(p){peran=p;localStorage.setItem('ipa_peran',p);document.getElementById('halamanLogin').classList.add('hidden');document.getElementById('halamanApp').classList.remove('hidden');document.getElementById('subJudul').textContent=p==='guru'?'Mode Guru':'Mode Murid';tabAktif='dashboard';render();}
+function logout(){if(!confirm('Keluar?'))return;localStorage.removeItem('ipa_peran');peran='';document.getElementById('halamanLogin').classList.remove('hidden');document.getElementById('halamanApp').classList.add('hidden');}
+function pindahTab(t){tabAktif=t;soalAktif=null;render();window.scrollTo(0,0);}
+
+function renderNav(){
+  const nav=document.getElementById('navBawah');
+  if(peran==='guru'){nav.innerHTML=`
+    <button class="${tabAktif==='dashboard'?'aktif':''}" onclick="pindahTab('dashboard')">🏠<br>Beranda</button>
+    <button class="${tabAktif==='administrasi'?'aktif':''}" onclick="pindahTab('administrasi')">📋<br>Admin</button>
+    <button class="${tabAktif==='materi'?'aktif':''}" onclick="pindahTab('materi')">📚<br>Materi</button>
+    <button class="${tabAktif==='soal'?'aktif':''}" onclick="pindahTab('soal')">❓<br>Soal</button>
+    <button class="${tabAktif==='nilai'?'aktif':''}" onclick="pindahTab('nilai')">🏆<br>Nilai</button>
+    <button class="${tabAktif==='pengaturan'?'aktif':''}" onclick="pindahTab('pengaturan')">⚙️<br>AI</button>
+    <button onclick="logout()">🚪<br>Keluar</button>`;}
+  else{nav.innerHTML=`
+    <button class="${tabAktif==='dashboard'?'aktif':''}" onclick="pindahTab('dashboard')">🏠<br>Beranda</button>
+    <button class="${tabAktif==='materi'?'aktif':''}" onclick="pindahTab('materi')">📚<br>Materi</button>
+    <button class="${tabAktif==='soal'?'aktif':''}" onclick="pindahTab('soal')">✏️<br>Latihan</button>
+    <button class="${tabAktif==='nilai'?'aktif':''}" onclick="pindahTab('nilai')">🏆<br>Nilaimu</button>
+    <button onclick="logout()">🚪<br>Keluar</button>`;}
 }
 
-function logout() {
-  if (!confirm('Keluar dari aplikasi?')) return;
-  localStorage.removeItem('ipa_peran');
-  peran = '';
-  document.getElementById('halamanLogin').classList.remove('hidden');
-  document.getElementById('halamanApp').classList.add('hidden');
-}
-
-/* ===== NAVIGASI ===== */
-function pindahTab(t) {
-  tabAktif = t;
-  soalAktif = null;
-  jawabanUser = {};
-  render();
-  window.scrollTo(0,0);
-}
-
-function renderNav() {
-  const nav = document.getElementById('navBawah');
-  if (peran === 'guru') {
-    nav.innerHTML = `
-      <button class="${tabAktif==='dashboard'?'aktif':''}" onclick="pindahTab('dashboard')">🏠<br>Beranda</button>
-      <button class="${tabAktif==='administrasi'?'aktif':''}" onclick="pindahTab('administrasi')">📋<br>Admin</button>
-      <button class="${tabAktif==='materi'?'aktif':''}" onclick="pindahTab('materi')">📚<br>Materi</button>
-      <button class="${tabAktif==='soal'?'aktif':''}" onclick="pindahTab('soal')">❓<br>Soal</button>
-      <button class="${tabAktif==='nilai'?'aktif':''}" onclick="pindahTab('nilai')">🏆<br>Nilai</button>
-      <button onclick="logout()">🚪<br>Keluar</button>`;
-  } else {
-    nav.innerHTML = `
-      <button class="${tabAktif==='dashboard'?'aktif':''}" onclick="pindahTab('dashboard')">🏠<br>Beranda</button>
-      <button class="${tabAktif==='materi'?'aktif':''}" onclick="pindahTab('materi')">📚<br>Materi</button>
-      <button class="${tabAktif==='soal'?'aktif':''}" onclick="pindahTab('soal')">✏️<br>Latihan</button>
-      <button class="${tabAktif==='nilai'?'aktif':''}" onclick="pindahTab('nilai')">🏆<br>Nilaimu</button>
-      <button onclick="logout()">🚪<br>Keluar</button>`;
-  }
-}
-
-/* ===== RENDER UTAMA ===== */
-function render() {
+function render(){
   renderNav();
-  const el = document.getElementById('konten');
-  const judul = document.getElementById('judulHalaman');
-  if (tabAktif==='dashboard') { judul.textContent = '🏠 Beranda'; el.innerHTML = viewDashboard(); }
-  else if (tabAktif==='administrasi') { judul.textContent = '📋 Administrasi Guru'; el.innerHTML = viewAdministrasi(); }
-  else if (tabAktif==='materi') { judul.textContent = '📚 Materi Bahan Ajar'; el.innerHTML = viewMateri(); }
-  else if (tabAktif==='soal') { judul.textContent = peran==='guru'?'❓ Bank Soal':'✏️ Latihan Soal'; el.innerHTML = peran==='guru'?viewSoalGuru():viewSoalMurid(); }
-  else if (tabAktif==='nilai') { judul.textContent = peran==='guru'?'🏆 Nilai Siswa':'🏆 Nilai Saya'; el.innerHTML = viewNilai(); }
+  const el=document.getElementById('konten'),j=document.getElementById('judulHalaman');
+  const v={dashboard:viewDashboard,administrasi:viewAdministrasi,materi:viewMateri,soal:peran==='guru'?viewSoalGuru:viewSoalMurid,nilai:viewNilai,pengaturan:viewPengaturan};
+  const t={dashboard:'🏠 Beranda',administrasi:'📋 Administrasi',materi:'📚 Materi',soal:peran==='guru'?'❓ Bank Soal':'✏️ Latihan',nilai:peran==='guru'?'🏆 Nilai Siswa':'🏆 Nilai Saya',pengaturan:'⚙️ Pengaturan AI'};
+  j.textContent=t[tabAktif]||'🔬 IPA MTs';
+  el.innerHTML=v[tabAktif]?v[tabAktif]():'';
 }
 
-/* ===== DASHBOARD ===== */
-function viewDashboard() {
-  const materi = LS.get('materi'), soal = LS.get('soal'), nilai = LS.get('nilai'), admin = LS.get('admin');
-  if (peran === 'guru') {
-    return `
-    <div class="card">
-      <h2>Selamat Datang, Guru! 👋</h2>
-      <p style="font-size:13px;color:#475569">Kelola materi, soal, dan nilai siswa IPA MTs kelas 7, 8, 9 dari sini.</p>
-    </div>
-    <div class="row">
-      <div class="card" style="text-align:center"><div style="font-size:24px">📚</div><b>${materi.length}</b><br><span style="font-size:12px">Materi</span></div>
-      <div class="card" style="text-align:center"><div style="font-size:24px">❓</div><b>${soal.length}</b><br><span style="font-size:12px">Soal</span></div>
-    </div>
-    <div class="row">
-      <div class="card" style="text-align:center"><div style="font-size:24px">🏆</div><b>${nilai.length}</b><br><span style="font-size:12px">Nilai Masuk</span></div>
-      <div class="card" style="text-align:center"><div style="font-size:24px">📋</div><b>${admin.length}</b><br><span style="font-size:12px">Administrasi</span></div>
-    </div>
-    <div class="card">
-      <h3>⚡ Aksi Cepat</h3>
-      <button class="full" onclick="pindahTab('materi')">+ Tambah Materi</button>
-      <button class="full hijau" onclick="pindahTab('soal')">+ Tambah Soal</button>
-      <button class="full abu" onclick="pindahTab('nilai')">Lihat Nilai Siswa</button>
-    </div>`;
-  } else {
-    const nilai = LS.get('nilai').filter(n=>n.nama==='Murid');
-    return `
-    <div class="card">
-      <h2>Selamat Belajar! 🎓</h2>
-      <p style="font-size:13px;color:#475569">Pilih menu <b>Materi</b> untuk belajar, atau <b>Latihan</b> untuk mengerjakan soal.</p>
-    </div>
-    <div class="card">
-      <h3>📊 Statistikmu</h3>
-      <p style="font-size:13px">Total latihan dikerjakan: <b>${nilai.length}</b></p>
-      <p style="font-size:13px">Nilai terbaik: <b>${nilai.length?Math.max(...nilai.map(n=>n.skor)):'-'}</b></p>
-      <p style="font-size:13px">Nilai terakhir: <b>${nilai.length?nilai[nilai.length-1].skor:'-'}</b></p>
-    </div>`;
-  }
-}
+function viewDashboard(){const m=LS.get('materi'),s=LS.get('soal'),n=LS.get('nilai'),a=LS.get('admin');if(peran==='guru'){return`<div class="card"><h2>Selamat Datang, Guru! 👋</h2><p style="font-size:13px;color:#475569">Semua fitur dilengkapi AI. Ketuk tombol ✨ AI untuk generate otomatis!</p></div><div class="row"><div class="card" style="text-align:center"><div style="font-size:24px">📚</div><b>${m.length}</b><br><span style="font-size:12px">Materi</span></div><div class="card" style="text-align:center"><div style="font-size:24px">❓</div><b>${s.length}</b><br><span style="font-size:12px">Soal</span></div></div><div class="row"><div class="card" style="text-align:center"><div style="font-size:24px">🏆</div><b>${n.length}</b><br><span style="font-size:12px">Nilai</span></div><div class="card" style="text-align:center"><div style="font-size:24px">📋</div><b>${a.length}</b><br><span style="font-size:12px">Admin</span></div></div><div class="card"><h3>⚡ Aksi Cepat dengan AI</h3><button class="full ai" onclick="pindahTab('materi')">✨ Buat Materi dengan AI</button><button class="full ai" onclick="pindahTab('soal')">✨ Buat Soal dengan AI</button><button class="full ai" onclick="pindahTab('administrasi')">📋 Buat Administrasi dengan AI</button><button class="full abu" onclick="pindahTab('nilai')">Lihat Nilai Siswa</button></div>`;}const nn=n.filter(x=>x.nama==='Murid');return`<div class="card"><h2>Selamat Belajar! 🎓</h2><p style="font-size:13px;color:#475569">Pilih menu Materi untuk belajar, atau Latihan untuk mengerjakan soal.</p></div><div class="card"><h3>📊 Statistikmu</h3><p style="font-size:13px">Total latihan: <b>${nn.length}</b></p><p style="font-size:13px">Nilai terbaik: <b>${nn.length?Math.max(...nn.map(x=>x.skor)):'-'}</b></p><p style="font-size:13px">Nilai terakhir: <b>${nn.length?nn[nn.length-1].skor:'-'}</b></p></div>`;}
 
-/* ===== ADMINISTRASI ===== */
-function viewAdministrasi() {
-  const data = LS.get('admin');
-  let html = `
-  <div class="card">
-    <h2>📋 Administrasi Guru</h2>
-    <p style="font-size:12px;color:#64748b">Catat Prota, Prosem, RPP, Silabus, dll.</p>
-  </div>
-  <div class="card">
-    <h3>➕ Tambah Administrasi</h3>
-    <input id="admJudul" placeholder="Judul (cth: Prota Semester 1)">
-    <select id="admKategori">
-      <option>Prota</option><option>Prosem</option><option>RPP</option>
-      <option>Silabus</option><option>KKM</option><option>Absensi</option><option>Lainnya</option>
-    </select>
-    <select id="admKelas">
-      <option>Umum</option><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option>
-    </select>
-    <textarea id="admIsi" placeholder="Keterangan / isi / link dokumen..."></textarea>
-    <button class="full hijau" onclick="simpanAdmin()">Simpan Administrasi</button>
-  </div>`;
-  if (data.length === 0) {
-    html += '<div class="card kosong">Belum ada data administrasi.</div>';
-  } else {
-    html += '<div class="card"><h3>📁 Daftar Administrasi ('+data.length+')</h3>';
-    data.forEach((d,i)=>{
-      html += `<div class="item">
-        <span class="badge">${d.kategori}</span>
-        <span class="badge">${d.kelas}</span>
-        <h3 style="margin-top:6px">${d.judul}</h3>
-        <p>${d.isi}</p>
-        <div class="meta">📅 ${d.tgl}</div>
-        <button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem('admin',${i})">Hapus</button>
-      </div>`;
-    });
-    html += '</div>';
-  }
-  return html;
-}
+async function jalankanAI(btn,label,fn){btn.disabled=true;const t=btn.textContent;btn.textContent=label;try{await fn();}catch(e){alert('❌ '+e.message);}btn.disabled=false;btn.textContent=t;}
+async function panggilGemini(prompt){const k=LS.get('apiKey','""');if(!k||k.length<10){alert('⚠️ Atur API Key dulu di menu ⚙️ AI!');throw new Error('API Key belum diatur');}const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+k,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})});const d=await r.json();if(!d.candidates)throw new Error(d.error?.message||'Gagal');return d.candidates[0].content.parts[0].text;}
 
-function simpanAdmin() {
-  const judul = document.getElementById('admJudul').value.trim();
-  const isi = document.getElementById('admIsi').value.trim();
-  if (!judul) return alert('Judul wajib diisi!');
-  const data = LS.get('admin');
-  data.push({
-    judul, isi,
-    kategori: document.getElementById('admKategori').value,
-    kelas: document.getElementById('admKelas').value,
-    tgl: new Date().toLocaleDateString('id-ID')
-  });
-  LS.set('admin', data);
-  render();
-  alert('Administrasi tersimpan!');
-}
-
-/* ===== MATERI ===== */
-function viewMateri() {
-  const data = LS.get('materi');
-  let html = '<div class="card"><h2>📚 Materi Bahan Ajar</h2></div>';
-  if (peran === 'guru') {
-    html += `
-    <div class="card">
-      <h3>➕ Tambah Materi</h3>
-      <input id="matJudul" placeholder="Judul materi">
-      <select id="matKelas"><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option></select>
-      <textarea id="matIsi" placeholder="Isi materi..."></textarea>
-      <button class="full hijau" onclick="simpanMateri()">Simpan Materi</button>
-    </div>`;
-  }
-  if (data.length === 0) {
-    html += '<div class="card kosong">Belum ada materi.</div>';
-    return html;
-  }
-  ['Kelas 7','Kelas 8','Kelas 9'].forEach(k=>{
-    const list = data.map((m,i)=>({...m,idx:i})).filter(m=>m.kelas===k);
-    if (list.length === 0) return;
-    html += `<div class="card"><h3>📘 ${k} (${list.length} materi)</h3>`;
-    list.forEach(m=>{
-      html += `<div class="item">
-        <h3>${m.judul}</h3>
-        <p>${m.isi}</p>
-        <div class="meta">📅 ${m.tgl}</div>
-        ${peran==='guru'?`<button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem('materi',${m.idx})">Hapus</button>`:''}
-      </div>`;
-    });
-    html += '</div>';
-  });
-  return html;
-}
-
-function simpanMateri() {
-  const judul = document.getElementById('matJudul').value.trim();
-  const isi = document.getElementById('matIsi').value.trim();
-  if (!judul || !isi) return alert('Judul dan isi wajib diisi!');
-  const data = LS.get('materi');
-  data.push({ judul, isi, kelas: document.getElementById('matKelas').value, tgl: new Date().toLocaleDateString('id-ID') });
-  LS.set('materi', data);
-  render();
-  alert('Materi tersimpan!');
-}
-
-/* ===== SOAL GURU ===== */
-function viewSoalGuru() {
-  const data = LS.get('soal');
-  let html = '<div class="card"><h2>❓ Bank Soal IPA</h2></div>';
-  html += `
-  <div class="card">
-    <h3>➕ Tambah Soal Pilihan Ganda</h3>
-    <select id="soKelas"><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option></select>
-    <input id="soTopik" placeholder="Topik (cth: Suhu & Kalor)">
-    <textarea id="soPertanyaan" placeholder="Pertanyaan..."></textarea>
-    <input id="soA" placeholder="Opsi A">
-    <input id="soB" placeholder="Opsi B">
-    <input id="soC" placeholder="Opsi C">
-    <input id="soD" placeholder="Opsi D">
-    <select id="soJawaban"><option value="A">Jawaban: A</option><option value="B">Jawaban: B</option><option value="C">Jawaban: C</option><option value="D">Jawaban: D</option></select>
-    <textarea id="soPembahasan" placeholder="Pembahasan jawaban..."></textarea>
-    <button class="full hijau" onclick="simpanSoal()">Simpan Soal</button>
-  </div>`;
-  if (data.length === 0) {
-    html += '<div class="card kosong">Belum ada soal.</div>';
-    return html;
-  }
-  ['Kelas 7','Kelas 8','Kelas 9'].forEach(k=>{
-    const list = data.map((s,i)=>({...s,idx:i})).filter(s=>s.kelas===k);
-    if (!list.length) return;
-    html += `<div class="card"><h3>📝 ${k} (${list.length} soal)</h3>`;
-    list.forEach(s=>{
-      html += `<div class="item soal">
-        ${s.topik?`<span class="badge">${s.topik}</span>`:''}
-        <p><b>${s.pertanyaan}</b></p>
-        <p>A. ${s.a}<br>B. ${s.b}<br>C. ${s.c}<br>D. ${s.d}</p>
-        <p style="color:#16a34a"><b>✅ Jawaban: ${s.jawaban}</b></p>
-        <p style="color:#475569;font-size:12px"><b>💡 Pembahasan:</b> ${s.pembahasan}</p>
-        <button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem('soal',${s.idx})">Hapus</button>
-      </div>`;
-    });
-    html += '</div>';
-  });
-  return html;
-}
-
-function simpanSoal() {
-  const p = document.getElementById('soPertanyaan').value.trim();
-  const a = document.getElementById('soA').value.trim();
-  const b = document.getElementById('soB').value.trim();
-  const c = document.getElementById('soC').value.trim();
-  const d = document.getElementById('soD').value.trim();
-  if (!p || !a || !b || !c || !d) return alert('Pertanyaan dan semua opsi wajib diisi!');
-  const data = LS.get('soal');
-  data.push({
-    kelas: document.getElementById('soKelas').value,
-    topik: document.getElementById('soTopik').value.trim(),
-    pertanyaan: p, a, b, c, d,
-    jawaban: document.getElementById('soJawaban').value,
-    pembahasan: document.getElementById('soPembahasan').value.trim(),
-    tgl: new Date().toLocaleDateString('id-ID')
-  });
-  LS.set('soal', data);
-  render();
-  alert('Soal tersimpan!');
-}
-
-/* ===== SOAL MURID (LATIHAN) ===== */
-function viewSoalMurid() {
-  if (soalAktif !== null) return viewLatihan();
-  let html = '<div class="card"><h2>✏️ Latihan Soal IPA</h2><p style="font-size:13px;color:#64748b">Pilih kelas untuk mulai latihan.</p></div>';
-  const data = LS.get('soal');
-  if (!data.length) return html + '<div class="card kosong">Belum ada soal. Tunggu guru menambah soal ya.</div>';
-  ['Kelas 7','Kelas 8','Kelas 9'].forEach(k=>{
-    const jml = data.filter(s=>s.kelas===k).length;
-    html += `<div class="card">
-      <h3>📘 ${k}</h3>
-      <p style="font-size:13px;color:#64748b">${jml} soal tersedia</p>
-      <button class="full ${jml?'':'abu'}" ${jml?'':'disabled'} onclick="mulaiLatihan('${k}')">Mulai Latihan</button>
-    </div>`;
-  });
-  return html;
-}
-
-function mulaiLatihan(kelas) {
-  const soal = LS.get('soal').filter(s=>s.kelas===kelas);
-  if (!soal.length) return alert('Belum ada soal.');
-  soalAktif = { kelas, soal, nomor: 0, skor: 0, riwayat: [] };
-  jawabanUser = {};
-  render();
-}
-
-function viewLatihan() {
-  const s = soalAktif;
-  if (s.nomor >= s.soal.length) {
-    const nilai = Math.round((s.skor / s.soal.length) * 100);
-    // simpan nilai
-    const data = LS.get('nilai');
-    data.push({ nama: 'Murid', kelas: s.kelas, skor: nilai, total: s.soal.length, benar: s.skor, tgl: new Date().toLocaleString('id-ID') });
-    LS.set('nilai', data);
-    const hasil = `
-    <div class="card">
-      <h2>🎉 Selesai!</h2>
-      <div class="nilai-besar">${nilai}</div>
-      <p style="text-align:center;font-size:13px">Benar ${s.skor} dari ${s.soal.length} soal</p>
-      <p style="text-align:center;font-size:12px;color:#64748b;margin-top:4px">${nilai>=80?'Luar biasa! 🌟':nilai>=60?'Bagus, terus belajar! 💪':'Ayo belajar lagi ya! 📖'}</p>
-      <button class="full hijau" onclick="soalAktif=null;render()">Kembali ke Menu</button>
-    </div>
-    <div class="card"><h3>📋 Review Jawaban</h3>
-    ${s.riwayat.map((r,i)=>`
-      <div class="item ${r.benar?'':''}" style="border-left-color:${r.benar?'#16a34a':'#dc2626'}">
-        <p><b>${i+1}. ${r.pertanyaan}</b></p>
-        <p>Jawabanmu: <b style="color:${r.benar?'#16a34a':'#dc2626'}">${r.pilih}</b> ${r.benar?'✅':'❌'}</p>
-        ${!r.benar?`<p>Jawaban benar: <b style="color:#16a34a">${r.jawaban}</b></p>`:''}
-        <p style="font-size:12px;color:#475569"><b>💡 ${r.pembahasan||'Tidak ada pembahasan.'}</b></p>
-      </div>
-    `).join('')}
-    </div>`;
-    return hasil;
-  }
-  const q = s.soal[s.nomor];
-  return `
-  <div class="card">
-    <div style="font-size:12px;color:#64748b">${s.kelas} • Soal ${s.nomor+1} dari ${s.soal.length}</div>
-    <h3 style="margin-top:8px">${q.pertanyaan}</h3>
-  </div>
-  <div class="card">
-    <div class="opsi" onclick="jawab('A')">A. ${q.a}</div>
-    <div class="opsi" onclick="jawab('B')">B. ${q.b}</div>
-    <div class="opsi" onclick="jawab('C')">C. ${q.c}</div>
-    <div class="opsi" onclick="jawab('D')">D. ${q.d}</div>
-  </div>
-  <div class="card" style="text-align:center;font-size:13px;color:#64748b">
-    Skor sementara: <b style="color:#16a34a">${s.skor}</b>
-  </div>`;
-}
-
-function jawab(pilih) {
-  const s = soalAktif;
-  const q = s.soal[s.nomor];
-  const benar = pilih === q.jawaban;
-  if (benar) s.skor++;
-  s.riwayat.push({ pertanyaan: q.pertanyaan, pilih, jawaban: q.jawaban, benar, pembahasan: q.pembahasan });
-  s.nomor++;
-  render();
-}
-
-/* ===== NILAI ===== */
-function viewNilai() {
-  const data = LS.get('nilai');
-  if (peran === 'murid') {
-    const saya = data.filter(n=>n.nama==='Murid');
-    if (!saya.length) return '<div class="card kosong">Belum ada nilai. Coba latihan dulu ya.</div>';
-    let html = '<div class="card"><h2>🏆 Nilai Saya</h2></div>';
-    saya.slice().reverse().forEach(n=>{
-      html += `<div class="item nilai">
-        <span class="badge">${n.kelas}</span>
-        <h3 style="margin-top:6px">Nilai: ${n.skor}</h3>
-        <p>Benar ${n.benar} dari ${n.total} soal</p>
-        <div class="meta">📅 ${n.tgl}</div>
-      </div>`;
-    });
-    return html;
-  }
-  // Guru
-  if (!data.length) return '<div class="card kosong">Belum ada nilai siswa.</div>';
-  let html = '<div class="card"><h2>🏆 Nilai Siswa</h2><p style="font-size:12px;color:#64748b">Total: '+data.length+' nilai</p></div>';
-  const rata = Math.round(data.reduce((a,b)=>a+b.skor,0)/data.length);
-  html += `<div class="card" style="text-align:center"><div style="font-size:12px;color:#64748b">Rata-rata</div><div class="nilai-besar">${rata}</div></div>`;
-  html += '<div class="card"><h3>📋 Daftar Nilai</h3>';
-  data.slice().reverse().forEach((n,i)=>{
-    const idx = data.length-1-i;
-    html += `<div class="item nilai">
-      <span class="badge">${n.kelas}</span>
-      <h3 style="margin-top:6px">${n.nama} — Nilai: ${n.skor}</h3>
-      <p>Benar ${n.benar}/${n.total}</p>
-      <div class="meta">📅 ${n.tgl}</div>
-      <button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem('nilai',${idx})">Hapus</button>
-    </div>`;
-  });
-  html += '</div>';
-  return html;
-}
-
-/* ===== HAPUS ===== */
-function hapusItem(kunci, index) {
-  if (!confirm('Yakin ingin menghapus?')) return;
-  const data = LS.get(kunci);
-  data.splice(index, 1);
-  LS.set(kunci, data);
-  render();
-}
-
-/* ===== AUTO LOGIN ===== */
-window.onload = () => {
-  const p = localStorage.getItem('ipa_peran');
-  if (p) login(p);
-};
- async function jalankanAI(btn,label,fn){btn.disabled=true;const t=btn.textContent;btn.textContent=label;try{await fn();}catch(e){alert('❌ '+e.message);}btn.disabled=false;btn.textContent=t;}
-async function panggilGemini(prompt){const k=LS.get('apiKey','""');if(!k||k.length<10){alert('⚠️ Atur API Key dulu di menu ⚙️ AI!');throw new Error('API Key belum diatur');}const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${k}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})});const d=await r.json();if(!d.candidates)throw new Error(d.error?.message||'Gagal');return d.candidates[0].content.parts[0].text;}
 function viewPengaturan(){const key=LS.get('apiKey','""');const ada=key&&key.length>10;return`<div class="card"><h2>⚙️ Pengaturan AI</h2><p style="font-size:13px;color:#475569;margin-bottom:8px">Masukkan API Key Gemini (gratis dari Google) untuk mengaktifkan semua fitur AI.</p>${ada?'<div class="success-box">✅ API Key sudah terpasang. Semua fitur AI siap!</div>':'<div class="warn-box">⚠️ API Key belum diatur. Fitur AI tidak akan berfungsi.</div>'}<div class="info-box"><b>📌 Cara dapat API Key:</b><br>1. Buka <b>aistudio.google.com/apikey</b><br>2. Login dengan Google<br>3. Klik "Create API key"<br>4. Copy kode, paste di bawah</div><input id="apiKeyInput" type="password" placeholder="Tempel API Key..." value="${ada?key:''}"><button class="full hijau" onclick="simpanApiKey()">💾 Simpan API Key</button><button class="full abu" onclick="tesApi()">🧪 Tes API Key</button></div><div class="card"><h3>ℹ️ Info Penting</h3><p style="font-size:12px;color:#64748b;line-height:1.6">• API Key hanya tersimpan di HP ini.<br>• Gratis limit 1.500 permintaan/hari.<br>• Butuh koneksi internet untuk generate.</p></div>`;}
 function simpanApiKey(){const k=document.getElementById('apiKeyInput').value.trim();if(!k)return alert('API Key kosong!');LS.set('apiKey',k);alert('✅ Tersimpan!');render();}
-async function tesApi(){const k=LS.get('apiKey','""');if(!k||k.length<10)return alert('Atur API Key dulu!');alert('⏳ Menguji...');try{const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${k}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:'Balas: OK'}]}]})});const d=await r.json();if(d.candidates)alert('✅ API Key berfungsi!');else alert('❌ Error: '+(d.error?.message||'Gagal'));}catch(e){alert('❌ '+e.message);}}
-async function generateMateri(btn){const kelas=document.getElementById('matKelas').value;const topik=document.getElementById('matTopikAI').value.trim();if(!topik)return alert('Isi topik dulu!');await jalankanAI(btn,'⏳ AI menulis materi...',async()=>{const p=`Buatkan materi pelajaran IPA untuk siswa ${kelas} MTs dengan topik "${topik}". Tulis materi lengkap (350-500 kata), bahasa Indonesia formal tapi ramah anak MTs, dengan poin-poin penting dan contoh nyata sehari-hari. Langsung tulis materinya tanpa pembukaan.`;const h=await panggilGemini(p);document.getElementById('matJudul').value=topik;document.getElementById('matIsi').value=h;alert('✅ Materi siap! Cek & ketuk Simpan.');});}
-async function generateSoal(btn){const kelas=document.getElementById('soKelas').value;const topik=document.getElementById('soTopik').value.trim();const jml=parseInt(document.getElementById('soJumlahAI').value)||5;if(!topik)return alert('Isi topik dulu!');await jalankanAI(btn,`⏳ AI membuat ${jml} soal...`,async()=>{const p=`Buat ${jml} soal pilihan ganda IPA untuk siswa ${kelas} MTs dengan topik "${topik}". Format SETIAP soal sebagai JSON dengan kunci: pertanyaan, a, b, c, d, jawaban (A/B/C/D), pembahasan. Balas HANYA array JSON valid tanpa teks lain, tanpa markdown, tanpa backtick.`;let h=await panggilGemini(p);h=h.replace(/```json|```/g,'').trim();const arr=JSON.parse(h);const data=LS.get('soal');arr.forEach(s=>data.push({kelas,topik,pertanyaan:s.pertanyaan,a:s.a,b:s.b,c:s.c,d:s.d,jawaban:s.jawaban,pembahasan:s.pembahasan,tgl:new Date().toLocaleDateString('id-ID')}));LS.set('soal',data);render();alert(`✅ ${arr.length} soal tersimpan!`);});}
-async function generateSoalUAS(btn){const kelas=document.getElementById('soKelas').value;const jml=parseInt(document.getElementById('soJumlahAI').value)||10;await jalankanAI(btn,`⏳ AI membuat ${jml} soal UAS...`,async()=>{const p=`Buat ${jml} soal pilihan ganda IPA untuk Ujian Akhir Semester ${kelas} MTs. Format SETIAP soal sebagai JSON dengan kunci: pertanyaan, a, b, c, d, jawaban (A/B/C/D), pembahasan. Balas HANYA array JSON valid tanpa teks lain.`;let h=await panggilGemini(p);h=h.replace(/```json|```/g,'').trim();const arr=JSON.parse(h);const data=LS.get('soal');arr.forEach(s=>data.push({kelas,topik:'UAS',pertanyaan:s.pertanyaan,a:s.a,b:s.b,c:s.c,d:s.d,jawaban:s.jawaban,pembahasan:s.pembahasan,tgl:new Date().toLocaleDateString('id-ID')}));LS.set('soal',data);render();alert(`✅ ${arr.length} soal UAS tersimpan!`);});}
-async function generateAdministrasi(btn,tipe){const kelas=document.getElementById('admKelas').value;const map={Prota:'⏳ AI membuat Prota...',Prosem:'⏳ AI membuat Prosem...',RPP:'⏳ AI membuat RPP...',Silabus:'⏳ AI membuat Silabus...',KKM:'⏳ AI membuat KKM...',Analisis:'⏳ AI membuat Analisis...'};await jalankanAI(btn,map[tipe]||'⏳ AI menulis...',async()=>{let p='';if(tipe==='Prota')p=`Buat Program Tahunan (Prota) mata pelajaran IPA untuk ${kelas} MTs. Isi dengan daftar materi per semester (Semester 1 & 2), alokasi waktu (jam pelajaran), dan keterangan singkat. Bahasa Indonesia formal, terstruktur, mudah dibaca guru.`;else if(tipe==='Prosem')p=`Buat Program Semester (Prosem) mata pelajaran IPA untuk ${kelas} MTs. Isi dengan rincian materi per bulan (Juli-Juni), alokasi jam, dan keterangan. Format terstruktur.`;else if(tipe==='RPP')p=`Buat Rencana Pelaksanaan Pembelajaran (RPP) mata pelajaran IPA untuk ${kelas} MTs, lengkap dengan: Identitas, Kompetensi Inti, Kompetensi Dasar, Indikator, Tujuan Pembelajaran, Materi, Metode, Langkah Pembelajaran (Pendahuluan-Inti-Penutup), Media, Sumber Belajar, dan Penilaian. Bahasa Indonesia formal.`;else if(tipe==='Silabus')p=`Buat Silabus mata pelajaran IPA untuk ${kelas} MTs, lengkap dengan: Kompetensi Dasar, Materi Pokok, Kegiatan Pembelajaran, Indikator, Penilaian, Alokasi Waktu, Sumber Belajar.`;else if(tipe==='KKM')p=`Buat Kriteria Ketuntasan Minimal (KKM) mata pelajaran IPA untuk ${kelas} MTs. Isi dengan: Kompleksitas, Daya Dukung, Intake, Nilai KKM per KD, dan KKM rata-rata.`;else p=`Buat Analisis Materi dan Penilaian mata pelajaran IPA untuk ${kelas} MTs. Isi dengan analisis kompetensi dasar, materi sulit/mudah, strategi penilaian, dan rekomendasi.`;const h=await panggilGemini(p);document.getElementById('admJudul').value=`${tipe} ${kelas} IPA`;document.getElementById('admIsi').value=h;document.getElementById('admKategori').value=tipe;alert(`✅ ${tipe} siap! Cek & ketuk Simpan.`);});}
-function viewAdministrasi(){const data=LS.get('admin');let h=`<div class="card"><h2>📋 Administrasi Guru</h2><p style="font-size:12px;color:#64748b">Buat otomatis dengan AI atau tulis manual.</p></div><div class="card"><h3>✨ Buat Administrasi dengan AI</h3><div class="info-box">Pilih kelas lalu ketuk tombol AI.</div><select id="admKelas"><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option></select><div class="row"><button class="ai" onclick="generateAdministrasi(this,'Prota')">✨ Prota</button><button class="ai" onclick="generateAdministrasi(this,'Prosem')">✨ Prosem</button></div><div class="row"><button class="ai" onclick="generateAdministrasi(this,'RPP')">✨ RPP</button><button class="ai" onclick="generateAdministrasi(this,'Silabus')">✨ Silabus</button></div><div class="row"><button class="ai" onclick="generateAdministrasi(this,'KKM')">✨ KKM</button><button class="ai" onclick="generateAdministrasi(this,'Analisis')">✨ Analisis</button></div></div><div class="card"><h3>✏️ Atau Tulis/Edit Manual</h3><input id="admJudul" placeholder="Judul"><select id="admKategori"><option>Prota</option><option>Prosem</option><option>RPP</option><option>Silabus</option><option>KKM</option><option>Analisis</option><option>Absensi</option><option>Lainnya</option></select><textarea id="admIsi" placeholder="Isi / keterangan..." style="min-height:150px"></textarea><button class="full hijau" onclick="simpanAdmin()">💾 Simpan Administrasi</button></div>`;if(!data.length)return h+'<div class="card kosong">Belum ada data.</div>';h+='<div class="card"><h3>📁 Daftar ('+data.length+')</h3>';data.forEach((d,i)=>{h+=`<div class="item admin"><span class="badge">${d.kategori}</span><span class="badge">${d.kelas}</span><h3 style="margin-top:6px">${d.judul}</h3><p>${d.isi}</p><div class="meta">📅 ${d.tgl}</div><button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem('admin',${i})">Hapus</button></div>`;});return h+'</div>';}
-function simpanAdmin(){const j=document.getElementById('admJudul').value.trim();if(!j)return alert('Judul wajib!');const d=LS.get('admin');d.push({judul:j,isi:document.getElementById('admIsi').value.trim(),kategori:document.getElementById('admKategori').value,kelas:document.getElementById('admKelas').value,tgl:new Date().toLocaleDateString('id-ID')});LS.set('admin',d);render();alert('✅ Tersimpan!');}
-function viewMateri(){const data=LS.get('materi');let h='<div class="card"><h2>📚 Materi Bahan Ajar</h2></div>';if(peran==='guru'){h+=`<div class="card"><h3>✨ Buat Materi dengan AI</h3><div class="info-box">Pilih kelas & ketik topik, AI menulis materinya.</div><select id="matKelas"><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option></select><input id="matTopikAI" placeholder="Topik (cth: Klasifikasi Makhluk Hidup)"><button class="full ai" onclick="generateMateri(this)">✨ Generate Materi dengan AI</button></div><div class="card"><h3>✏️ Atau Tulis Manual</h3><input id="matJudul" placeholder="Judul materi"><textarea id="matIsi" placeholder="Isi materi..." style="min-height:150px"></textarea><button class="full hijau" onclick="simpanMateri()">💾 Simpan Materi</button></div>`;}if(!data.length)return h+'<div class="card kosong">Belum ada materi.</div>';['Kelas 7','Kelas 8','Kelas 9'].forEach(k=>{const l=data.map((m,i)=>({...m,idx:i})).filter(m=>m.kelas===k);if(!l.length)return;h+=`<div class="card"><h3>📘 ${k} (${l.length})</h3>`;l.forEach(m=>{h+=`<div class="item"><h3>${m.judul}</h3><p>${m.isi}</p><div class="meta">📅 ${m.tgl}</div>${peran==='guru'?`<button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem('materi',${m.idx})">Hapus</button>`:''}</div>`;});h+='</div>';});return h;}
-function simpanMateri(){const j=document.getElementById('matJudul').value.trim(),i=document.getElementById('matIsi').value.trim();if(!j||!i)return alert('Lengkapi!');const d=LS.get('materi');d.push({judul:j,isi:i,kelas:document.getElementById('matKelas').value,tgl:new Date().toLocaleDateString('id-ID')});LS.set('materi',d);render();alert('✅ Tersimpan!');}
-function viewSoalGuru(){const data=LS.get('soal');let h=`<div class="card"><h2>❓ Bank Soal IPA</h2></div><div class="card"><h3>✨ Buat Soal dengan AI</h3><div class="info-box">AI membuat soal + kunci + pembahasan otomatis.</div><select id="soKelas"><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option></select><input id="soTopik" placeholder="Topik/Bab (cth: Suhu dan Kalor)"><select id="soJumlahAI"><option value="5">5 soal</option><option value="10">10 soal</option><option value="15">15 soal</option><option value="20">20 soal</option></select><button class="full ai" onclick="generateSoal(this)">✨ Generate Soal per Bab</button><button class="full ai" onclick="generateSoalUAS(this)">📝 Generate Soal UAS</button></div><div class="card"><h3>✏️ Atau Tulis Manual</h3><textarea id="soPertanyaan" placeholder="Pertanyaan..."></textarea><input id="soA" placeholder="Opsi A"><input id="soB" placeholder="Opsi B"><input id="soC" placeholder="Opsi C"><input id="soD" placeholder="Opsi D"><select id="soJawaban"><option value="A">Jawaban: A</option><option value="B">Jawaban: B</option><option value="C">Jawaban: C</option><option value="D">Jawaban: D</option></select><textarea id="soPembahasan" placeholder="Pembahasan..."></textarea><button class="full hijau" onclick="simpanSoal()">💾 Simpan Soal</button></div>`;if(!data.length)return h+'<div class="card kosong">Belum ada soal.</div>';['Kelas 7','Kelas 8','Kelas 9'].forEach(k=>{const l=data.map((s,i)=>({...s,idx:i})).filter(s=>s.kelas===k);if(!l.length)return;h+=`<div class="card"><h3>📝 ${k} (${l.length})</h3>`;l.forEach(s=>{h+=`<div class="item soal">${s.topik?`<span class="badge">${s.topik}</span>`:''}<p><b>${s.pertanyaan}</b></p><p>A. ${s.a}<br>B. ${s.b}<br>C. ${s.c}<br>D. ${s.d}</p><p style="color:#16a34a"><b>✅ ${s.jawaban}</b></p><p style="color:#475569;font-size:12px"><b>💡 ${s.pembahasan}</b></p><button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem('soal',${s.idx})">Hapus</button></div>`;});h+='</div>';});return h;}
-function simpanSoal(){const p=document.getElementById('soPertanyaan').value.trim(),a=document.getElementById('soA').value.trim(),b=document.getElementById('soB').value.trim(),c=document.getElementById('soC').value.trim(),d=document.getElementById('soD').value.trim();if(!p||!a||!b||!c||!d)return alert('Semua wajib!');const dt=LS.get('soal');dt.push({kelas:document.getElementById('soKelas').value,topik:document.getElementById('soTopik').value.trim(),pertanyaan:p,a,b,c,d,jawaban:document.getElementById('soJawaban').value,pembahasan:document.getElementById('soPembahasan').value.trim(),tgl:new Date().toLocaleDateString('id-ID')});LS.set('soal',dt);render();alert('✅ Tersimpan!');}
-<div style="position:fixed;bottom:60px;right:10px;z-index:100"><button onclick="pindahTab('pengaturan')" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;border:none;padding:12px 16px;border-radius:50px;font-size:13px;font-weight:bold;box-shadow:0 4px 12px rgba(139,92,246,0.4);cursor:pointer">⚙️ Atur API Key</button></div></script>
-</body>
-</html>
+async function tesApi(){const k=LS.get('apiKey','""');if(!k||k.length<10)return alert('Atur API Key dulu!');alert('⏳ Menguji...');try{const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+k,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:'Balas: OK'}]}]})});const d=await r.json();if(d.candidates)alert('✅ API Key berfungsi!');else alert('❌ Error: '+(d.error?.message||'Gagal'));}catch(e){alert('❌ '+e.message);}}
 
+async function generateMateri(btn){const kelas=document.getElementById('matKelas').value;const topik=document.getElementById('matTopikAI').value.trim();if(!topik)return alert('Isi topik dulu!');await jalankanAI(btn,'⏳ AI menulis materi...',async()=>{const p='Buatkan materi pelajaran IPA untuk siswa '+kelas+' MTs dengan topik "'+topik+'". Tulis materi lengkap (350-500 kata), bahasa Indonesia formal tapi ramah anak MTs, dengan poin-poin penting dan contoh nyata sehari-hari.';const h=await panggilGemini(p);document.getElementById('matJudul').value=topik;document.getElementById('matIsi').value=h;alert('✅ Materi siap! Cek & ketuk Simpan.');});}
+async function generateSoal(btn){const kelas=document.getElementById('soKelas').value;const topik=document.getElementById('soTopik').value.trim();const jml=parseInt(document.getElementById('soJumlahAI').value)||5;if(!topik)return alert('Isi topik dulu!');await jalankanAI(btn,'⏳ AI membuat '+jml+' soal...',async()=>{const p='Buat '+jml+' soal pilihan ganda IPA untuk siswa '+kelas+' MTs dengan topik "'+topik+'". Format SETIAP soal sebagai JSON: pertanyaan, a, b, c, d, jawaban (A/B/C/D), pembahasan. Balas HANYA array JSON valid tanpa teks lain.';let h=await panggilGemini(p);h=h.replace(/```json|```/g,'').trim();const arr=JSON.parse(h);const data=LS.get('soal');arr.forEach(s=>data.push({kelas,topik,pertanyaan:s.pertanyaan,a:s.a,b:s.b,c:s.c,d:s.d,jawaban:s.jawaban,pembahasan:s.pembahasan,tgl:new Date().toLocaleDateString('id-ID')}));LS.set('soal',data);render();alert('✅ '+arr.length+' soal tersimpan!');});}
+async function generateSoalUAS(btn){const kelas=document.getElementById('soKelas').value;const jml=parseInt(document.getElementById('soJumlahAI').value)||10;await jalankanAI(btn,'⏳ AI membuat '+jml+' soal UAS...',async()=>{const p='Buat '+jml+' soal pilihan ganda IPA untuk Ujian Akhir Semester '+kelas+' MTs. Format JSON: pertanyaan, a, b, c, d, jawaban, pembahasan. Balas HANYA array JSON valid.';let h=await panggilGemini(p);h=h.replace(/```json|```/g,'').trim();const arr=JSON.parse(h);const data=LS.get('soal');arr.forEach(s=>data.push({kelas,topik:'UAS',pertanyaan:s.pertanyaan,a:s.a,b:s.b,c:s.c,d:s.d,jawaban:s.jawaban,pembahasan:s.pembahasan,tgl:new Date().toLocaleDateString('id-ID')}));LS.set('soal',data);render();alert('✅ '+arr.length+' soal UAS tersimpan!');});}
+async function generateAdministrasi(btn,tipe){const kelas=document.getElementById('admKelas').value;const map={Prota:'⏳ AI membuat Prota...',Prosem:'⏳ AI membuat Prosem...',RPP:'⏳ AI membuat RPP...',Silabus:'⏳ AI membuat Silabus...',KKM:'⏳ AI membuat KKM...',Analisis:'⏳ AI membuat Analisis...'};await jalankanAI(btn,map[tipe]||'⏳ AI menulis...',async()=>{let p='';if(tipe==='Prota')p='Buat Program Tahunan (Prota) mata pelajaran IPA untuk '+kelas+' MTs. Isi dengan daftar materi per semester, alokasi waktu, dan keterangan.';else if(tipe==='Prosem')p='Buat Program Semester (Prosem) mata pelajaran IPA untuk '+kelas+' MTs. Isi rincian materi per bulan (Juli-Juni), alokasi jam.';else if(tipe==='RPP')p='Buat Rencana Pelaksanaan Pembelajaran (RPP) mata pelajaran IPA untuk '+kelas+' MTs lengkap: Identitas, KI, KD, Indikator, Tujuan, Materi, Metode, Langkah, Media, Penilaian.';else if(tipe==='Silabus')p='Buat Silabus mata pelajaran IPA untuk '+kelas+' MTs: KD, Materi Pokok, Kegiatan, Indikator, Penilaian, Alokasi Waktu.';else if(tipe==='KKM')p='Buat Kriteria Ketuntasan Minimal (KKM) mata pelajaran IPA untuk '+kelas+' MTs: Kompleksitas, Daya Dukung, Intake, KKM per KD.';else p='Buat Analisis Materi dan Penilaian mata pelajaran IPA untuk '+kelas+' MTs.';const h=await panggilGemini(p);document.getElementById('admJudul').value=tipe+' '+kelas+' IPA';document.getElementById('admIsi').value=h;document.getElementById('admKategori').value=tipe;alert('✅ '+tipe+' siap!');});}
+
+function viewAdministrasi(){const data=LS.get('admin');let h='<div class="card"><h2>📋 Administrasi Guru</h2></div><div class="card"><h3>✨ Buat Administrasi dengan AI</h3><div class="info-box">Pilih kelas lalu ketuk tombol AI.</div><select id="admKelas"><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option></select><div class="row"><button class="ai" onclick="generateAdministrasi(this,\'Prota\')">✨ Prota</button><button class="ai" onclick="generateAdministrasi(this,\'Prosem\')">✨ Prosem</button></div><div class="row"><button class="ai" onclick="generateAdministrasi(this,\'RPP\')">✨ RPP</button><button class="ai" onclick="generateAdministrasi(this,\'Silabus\')">✨ Silabus</button></div><div class="row"><button class="ai" onclick="generateAdministrasi(this,\'KKM\')">✨ KKM</button><button class="ai" onclick="generateAdministrasi(this,\'Analisis\')">✨ Analisis</button></div></div><div class="card"><h3>✏️ Atau Tulis/Edit Manual</h3><input id="admJudul" placeholder="Judul"><select id="admKategori"><option>Prota</option><option>Prosem</option><option>RPP</option><option>Silabus</option><option>KKM</option><option>Analisis</option><option>Absensi</option><option>Lainnya</option></select><textarea id="admIsi" placeholder="Isi..." style="min-height:150px"></textarea><button class="full hijau" onclick="simpanAdmin()">💾 Simpan</button></div>';if(!data.length)return h+'<div class="card kosong">Belum ada data.</div>';h+='<div class="card"><h3>📁 Daftar ('+data.length+')</h3>';data.forEach((d,i)=>{h+='<div class="item admin"><span class="badge">'+d.kategori+'</span><span class="badge">'+d.kelas+'</span><h3 style="margin-top:6px">'+d.judul+'</h3><p>'+d.isi+'</p><div class="meta">📅 '+d.tgl+'</div><button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem(\'admin\','+i+')">Hapus</button></div>';});return h+'</div>';}
+function simpanAdmin(){const j=document.getElementById('admJudul').value.trim();if(!j)return alert('Judul wajib!');const d=LS.get('admin');d.push({judul:j,isi:document.getElementById('admIsi').value.trim(),kategori:document.getElementById('admKategori').value,kelas:document.getElementById('admKelas').value,tgl:new Date().toLocaleDateString('id-ID')});LS.set('admin',d);render();alert('✅ Tersimpan!');}
+function viewMateri(){const data=LS.get('materi');let h='<div class="card"><h2>📚 Materi Bahan Ajar</h2></div>';if(peran==='guru'){h+='<div class="card"><h3>✨ Buat Materi dengan AI</h3><div class="info-box">Pilih kelas & ketik topik.</div><select id="matKelas"><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option></select><input id="matTopikAI" placeholder="Topik"><button class="full ai" onclick="generateMateri(this)">✨ Generate Materi dengan AI</button></div><div class="card"><h3>✏️ Atau Tulis Manual</h3><input id="matJudul" placeholder="Judul materi"><textarea id="matIsi" placeholder="Isi materi..." style="min-height:150px"></textarea><button class="full hijau" onclick="simpanMateri()">💾 Simpan</button></div>';}if(!data.length)return h+'<div class="card kosong">Belum ada materi.</div>';['Kelas 7','Kelas 8','Kelas 9'].forEach(k=>{const l=data.map((m,i)=>({...m,idx:i})).filter(m=>m.kelas===k);if(!l.length)return;h+='<div class="card"><h3>📘 '+k+' ('+l.length+')</h3>';l.forEach(m=>{h+='<div class="item"><h3>'+m.judul+'</h3><p>'+m.isi+'</p><div class="meta">📅 '+m.tgl+'</div>'+(peran==='guru'?'<button class="merah" style="font-size:11px;padding:5px 8px;margin-top:6px" onclick="hapusItem(\'materi\','+m.idx+')">Hapus</button>':'')+'</div>';});h+='</div>';});return h;}
+function simpanMateri(){const j=document.getElementById('matJudul').value.trim(),i=document.getElementById('matIsi').value.trim();if(!j||!i)return alert('Lengkapi!');const d=LS.get('materi');d.push({judul:j,isi:i,kelas:document.getElementById('matKelas').value,tgl:new Date().toLocaleDateString('id-ID')});LS.set('materi',d);render();alert('✅ Tersimpan!');}
+function viewSoalGuru(){const data=LS.get('soal');let h='<div class="card"><h2>❓ Bank Soal IPA</h2></div><div class="card"><h3>✨ Buat Soal dengan AI</h3><div class="info-box">AI membuat soal + kunci + pembahasan.</div><select id="soKelas"><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option></select><input id="soTopik" placeholder="Topik/Bab"><select id="soJumlahAI"><option value="5">5 soal</option><option value="10">10 soal</option><option value="15">15 soal</option><option value="20">20 soal</option></select><button class="full ai" onclick="generateSoal(this)">✨ Generate Soal per Bab</button><button class="full ai" onclick="generateSoalUAS(this)">📝 Generate Soal UAS</button></div><div class="card"><h3>✏️ Atau Tulis Manual</h3><textarea id="soPertanyaan" placeholder="Pertanyaan..."></textarea><input id="s
